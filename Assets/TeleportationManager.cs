@@ -11,12 +11,20 @@ public class TeleportationManager : MonoBehaviour
 
     public GameObject player;
     public GameObject playerCollider;
+    
+    public bool inCieling = false;
+
+    public GameObject rotationMenu1;
+    public GameObject rotationMenu2;
 
     public void teleportToDefault(){
         player.SetActive(false);  
         player.transform.position = defaultPosition;
         playerCollider.transform.position = defaultPosition;
         player.SetActive(true);
+        inCieling = false;
+        rotationMenu1.SetActive(false);
+        rotationMenu2.SetActive(false);
     }
 
     public void teleportToMergo(){
@@ -24,6 +32,9 @@ public class TeleportationManager : MonoBehaviour
         player.transform.position = mergoPosition;
         playerCollider.transform.position = mergoPosition;
         player.SetActive(true);
+        inCieling = false;
+        rotationMenu1.SetActive(false);
+        rotationMenu2.SetActive(false);
     }
 
     public void teleportToGiant(){
@@ -31,6 +42,9 @@ public class TeleportationManager : MonoBehaviour
         player.transform.position = giantPosition;
         playerCollider.transform.position = giantPosition;
         player.SetActive(true);
+        inCieling = false;
+        rotationMenu1.SetActive(false);
+        rotationMenu2.SetActive(false);
     }
 
     public void teleportToCieling(){
@@ -38,5 +52,8 @@ public class TeleportationManager : MonoBehaviour
         player.transform.position = cielingPosition;
         playerCollider.transform.position = cielingPosition;
         player.SetActive(true);
+        inCieling = true;
+        rotationMenu1.SetActive(true);
+        rotationMenu2.SetActive(true);
     }
 }

@@ -15,6 +15,9 @@ public class ActionManager : MonoBehaviour
     public AudioSource phoneTrack1;
     public GameObject phoneLight1;
 
+    public AudioSource phoneTrack2;
+    public GameObject phoneLight2;
+
     // necessary object for swapping tv between on and off
     public AudioSource tvStatic;
     public GameObject videoPlayer;
@@ -28,18 +31,29 @@ public class ActionManager : MonoBehaviour
     public GameObject onScreen1;
     public GameObject tvLight1;
 
+    public AudioSource tvStatic2;
+    public GameObject videoPlayer2;
+    public GameObject offScreen2;
+    public GameObject onScreen2;
+    public GameObject tvLight2;
+
     public GameObject lanternLight;
 
+    public TeleportationManager teleportation;
+
     public GameObject menu;
+    public GameObject rotationMenu1;
+    public GameObject rotationMenu2;
 
     private bool onTVState = true;
     private bool onTVState1 = true;
+    private bool onTVState2 = true;
     private bool onMenuState = false;
 
     public void doPrimaryAction(){
         
         // if we are grabbing flashlight other actions should take priority
-        if(GrabbedManager.Instance.flashLightGrabbed || GrabbedManager.Instance.flashLightGrabbed1){
+        if(GrabbedManager.Instance.flashLightGrabbed || GrabbedManager.Instance.flashLightGrabbed1 || GrabbedManager.Instance.flashLightGrabbed2){
             // if phone is grabbed turn it off
             if(GrabbedManager.Instance.phoneGrabbed){
                 turnOffPhone();
@@ -59,6 +73,10 @@ public class ActionManager : MonoBehaviour
             // otherwise we can turn the flashlight off
             else if(GrabbedManager.Instance.flashLightGrabbed){
                 swapFlashLightSource();
+            }
+            // otherwise we can turn the flashlight off
+            else if(GrabbedManager.Instance.flashLightGrabbed2){
+                swapFlashLightSource2();
             }
             else{
                 swapFlashLightSource1();
@@ -84,6 +102,14 @@ public class ActionManager : MonoBehaviour
             if(GrabbedManager.Instance.remoteGrabbed1){
                 swapTVState1();
             }
+            // if phone is grabbed turn it off
+            if(GrabbedManager.Instance.phoneGrabbed2){
+                turnOffPhone2();
+            }
+            // otherwise check if remote is grabbed and turn swap state if it is
+            if(GrabbedManager.Instance.remoteGrabbed2){
+                swapTVState2();
+            }
         }
         
     }
@@ -96,9 +122,12 @@ public class ActionManager : MonoBehaviour
     }
 
     public void toggleMenu(){
-        Debug.Log("Bruh");
         onMenuState = !onMenuState;
         menu.SetActive(onMenuState);
+        if(teleportation.inCieling){
+            rotationMenu1.SetActive(onMenuState);
+            rotationMenu2.SetActive(onMenuState);
+        }
     }
 
     // swaps the state of the tv
@@ -153,6 +182,32 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    // swaps the state of the tv
+    public void swapTVState2(){
+        // if tv is on do this
+        if(onTVState2){
+            // turn off on screen, enable off screen, turn off video player object
+            // and stop the audio. Make sure to swap bool
+            onScreen2.SetActive(false);
+            offScreen2.SetActive(true);
+            videoPlayer2.SetActive(false);
+            tvLight2.SetActive(false);
+            tvStatic2.Stop();
+            onTVState2 = false;
+        }
+        // otherwise do this
+        else{
+            // turn on on screen, turn off off screen, turn on video palyer,
+            // and start audio. Make sure to swap bool
+            onScreen2.SetActive(true);
+            offScreen2.SetActive(false);
+            videoPlayer2.SetActive(true);
+            tvLight2.SetActive(true);
+            tvStatic2.Play();
+            onTVState2 = true;
+        }
+    }
+
     // turn off the phone
     public void turnOffPhone(){
         // stop the track and turn off the light
@@ -165,6 +220,13 @@ public class ActionManager : MonoBehaviour
         // stop the track and turn off the light
         phoneTrack1.Stop();
         phoneLight1.SetActive(false);
+    }
+
+    // turn off the phone
+    public void turnOffPhone2(){
+        // stop the track and turn off the light
+        phoneTrack2.Stop();
+        phoneLight2.SetActive(false);
     }
 
     // swap the flash light on and off
@@ -195,6 +257,30 @@ public class ActionManager : MonoBehaviour
     public void swapFlashLightSource1(){
         // find flash light and get its spotlight, and the front of the flash light
         GameObject flash = GameObject.Find("FlashLight1");
+
+        GameObject light = flash.transform.GetChild(2).gameObject;
+
+        GameObject light_body = flash.transform.GetChild(1).gameObject;
+        
+        // if the light is active, turn it off and swap the material on the
+        // front of flash light
+        if(light.activeSelf){
+            light.SetActive(false);
+
+            light_body.GetComponent<MeshRenderer>().material = offMaterial;
+        }
+        // do the opposite
+        else{
+            light.SetActive(true);
+
+            light_body.GetComponent<MeshRenderer>().material = onMaterial;
+        }
+    }
+
+    // swap the flash light on and off
+    public void swapFlashLightSource2(){
+        // find flash light and get its spotlight, and the front of the flash light
+        GameObject flash = GameObject.Find("FlashLight2");
 
         GameObject light = flash.transform.GetChild(2).gameObject;
 
