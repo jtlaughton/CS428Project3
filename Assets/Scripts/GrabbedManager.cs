@@ -18,6 +18,10 @@ public class GrabbedManager : MonoBehaviour
     public bool mergoSideWallGrabbed = false;
     public bool mergoOtherWallGrabbed = false;
 
+    public bool flashLightGrabbed1 = false;
+    public bool remoteGrabbed1 = false;
+    public bool phoneGrabbed1 = false;
+
     public Rigidbody rb;
     public Rigidbody rb2;
 
@@ -64,6 +68,36 @@ public class GrabbedManager : MonoBehaviour
     // set phoneGrabbed to false
     public void deactivatePhoneGrab(){
         phoneGrabbed = false;
+    }
+
+    // set flashLightGrabbed to true
+    public void activateFlashGrab1(){
+        flashLightGrabbed1 = true;
+    }
+
+    // set flashLightGrabbed to false
+    public void deactivateFlashGrab1(){
+        flashLightGrabbed1 = false;
+    }
+
+    // set remoteGrabbed to true
+    public void activateRemoteGrab1(){
+        remoteGrabbed1 = true;
+    }
+
+    // set remoteGrabbed to false
+    public void deactivateRemoteGrab1(){
+        remoteGrabbed1 = false;
+    }
+
+    // set phoneGrabbed to true
+    public void activatePhoneGrab1(){
+        phoneGrabbed1 = true;
+    }
+
+    // set phoneGrabbed to false
+    public void deactivatePhoneGrab1(){
+        phoneGrabbed1 = false;
     }
 
     public void activateCeiling(){
