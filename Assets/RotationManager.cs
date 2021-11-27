@@ -5,6 +5,10 @@ using UnityEngine;
 public class RotationManager : MonoBehaviour
 {
     public GameObject toRotate;
+    public GameObject playerBody;
+    public GameObject playerAlias;
+    public GameObject center;
+
     private int state = 0;
 
     public void doRotationClock(){
@@ -30,10 +34,13 @@ public class RotationManager : MonoBehaviour
         }
         
         toRotate.transform.rotation = Quaternion.Euler(newRotation);
+        playerBody.SetActive(false);
+        playerAlias.transform.position = center.transform.position;
+        playerBody.SetActive(true);
     }
     public void doRotationCounter(){
         Vector3 newRotation = new Vector3(0,0,0);
-        
+
         switch(state){
             case 0:
                 newRotation = new Vector3(270, 0, 0);
@@ -54,5 +61,8 @@ public class RotationManager : MonoBehaviour
         }
         
         toRotate.transform.rotation = Quaternion.Euler(newRotation);
+        playerBody.SetActive(false);
+        playerAlias.transform.position = center.transform.position;
+        playerBody.SetActive(true);
     }
 }
