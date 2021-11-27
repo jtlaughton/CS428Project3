@@ -1,0 +1,8 @@
+newmtl ceiling_material
+Kd 1 1 1
+d 1
+
+newmtl ceiling_white
+Kd 1 1 1
+d 1
+
