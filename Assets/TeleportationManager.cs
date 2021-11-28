@@ -7,7 +7,7 @@ public class TeleportationManager : MonoBehaviour
     public Vector3 defaultPosition;
     public Vector3 mergoPosition;
     public Vector3 giantPosition;
-    public Vector3 cielingPosition;
+    public GameObject cielingPosition;
 
     public GameObject player;
     public GameObject playerCollider;
@@ -49,8 +49,8 @@ public class TeleportationManager : MonoBehaviour
 
     public void teleportToCieling(){
         player.SetActive(false);
-        player.transform.position = cielingPosition;
-        playerCollider.transform.position = cielingPosition;
+        player.transform.position = cielingPosition.transform.position;
+        playerCollider.transform.position = cielingPosition.transform.position;
         player.SetActive(true);
         inCieling = true;
         rotationMenu1.SetActive(true);
